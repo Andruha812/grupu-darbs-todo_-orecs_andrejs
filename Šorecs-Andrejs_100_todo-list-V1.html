@@ -1,5 +1,6 @@
 <!Doctype html>
-<!--Autors: Andrejs Šorecs V1-->
+<!--Autors: Andrejs Šorecs V1
+     Autors: Mikus TolkačevsV2-->
 <html lang="lv">
     <head>
         <meta charset="UTF-8">
@@ -30,7 +31,9 @@
             document.body.appendChild(elements);
             document.getElementById("task-list").appendChild(elements);
             elements.classList.add("list-group-item");
-            
+             elements.onclick = function(){
+                 elements.classList.toggle("text-decoration-line-through"); 
+             }
             const dzest=document.createElement('button');
             dzest.innerText="Dzest";
             document.body.appendChild(dzest);
