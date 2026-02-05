@@ -1,2 +1,2 @@
-# grupu-darbs-todo_-orecs_andrejs
+# grupu-darbs-todo_sorecs_andrejs
 Todo List grupu darbs

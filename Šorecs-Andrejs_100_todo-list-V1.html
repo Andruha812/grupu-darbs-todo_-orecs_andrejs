@@ -1,0 +1,48 @@
+<!Doctype html>
+<!--Autors: Andrejs Šorecs V1-->
+<html lang="lv">
+    <head>
+        <meta charset="UTF-8">
+        
+       <title>Moderna majaslapa</title> 
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <p>Localstorage tas ir datu glabasana jusu personala datora un pec vina izslegsanas dati joprojam bus glabati tikai dati nebus glabati ja jus izmantojat inkognito rezimu vai ja lietotajs iztiris visu browser history vai ja ir mazs vietas datora vai pats devoleper iztiris datus</p>
+        <div class="container p-3 my-3 mt-3 bg-black text-white">
+            <h3 class="text-center">Mani darbi</h3>
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-group">
+                <input id="ievads" type="text" class="form-control" placeholder="Ievadiet darbu....">
+                <input type="button" class="btn btn-primary" onclick="Pievienosana()" value="Pievienot">
+                </div>
+                    <ul id="task-list" class="list-group"></ul>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+        function Pievienosana(){
+            const elements = document.createElement('li');
+            elements.innerHTML=document.getElementById("ievads").value;
+            document.body.appendChild(elements);
+            document.getElementById("task-list").appendChild(elements);
+            elements.classList.add("list-group-item");
+            
+            const dzest=document.createElement('button');
+            dzest.innerText="Dzest";
+            document.body.appendChild(dzest);
+            
+            dzest.classList.add("btn");
+            dzest.classList.add("btn-danger");
+            dzest.classList.add("float-end");
+            dzest.onclick = function(){
+              elements.remove();  
+            }
+            elements.appendChild(dzest);
+        }
+        </script>
+    </body>
+</html>
