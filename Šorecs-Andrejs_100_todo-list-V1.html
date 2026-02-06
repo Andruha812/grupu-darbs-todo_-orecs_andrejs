@@ -1,6 +1,5 @@
 <!Doctype html>
-<!--Autors: Andrejs Šorecs V1
-     Autors: Mikus TolkačevsV2-->
+<!--Autors: Andrejs Šorecs V1-->
 <html lang="lv">
     <head>
         <meta charset="UTF-8">
@@ -18,6 +17,7 @@
                     <div class="input-group">
                 <input id="ievads" type="text" class="form-control" placeholder="Ievadiet darbu....">
                 <input type="button" class="btn btn-primary" onclick="Pievienosana()" value="Pievienot">
+             
                 </div>
                     <ul id="task-list" class="list-group"></ul>
                 </div>
@@ -33,19 +33,47 @@
             elements.classList.add("list-group-item");
              elements.onclick = function(){
                  elements.classList.toggle("text-decoration-line-through"); 
+    
              }
             const dzest=document.createElement('button');
             dzest.innerText="Dzest";
             document.body.appendChild(dzest);
+   
             
             dzest.classList.add("btn");
             dzest.classList.add("btn-danger");
             dzest.classList.add("float-end");
             dzest.onclick = function(){
-              elements.remove();  
+              elements.remove(); 
+             saveData();
+               
             }
             elements.appendChild(dzest);
+            saveData();
+      
         }
+         function saveTasks(){
+             var tasks = [] 
+             document.querySelectorAll("#tasklist li").forEach(task => {
+                 tasks.push(task.textContent);
+             });
+             SaveData(tasks);
+         }
+        function saveData() {
+            
+            console.log
+            const myJson = JSON.
+            
+        }
+
+        function loadData() {
+           const data = localStorage.getItem("ievads");
+    if(data){
+        document.getElementById("task-list").innerHTML = data;
+    } 
+  
+        }
+              loadData();
         </script>
     </body>
 </html>
