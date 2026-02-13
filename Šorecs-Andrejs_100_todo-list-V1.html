@@ -1,5 +1,6 @@
 <!Doctype html>
 <!--Autors: Andrejs Šorecs V1-->
+<!--Autors: Mikus Tolkacevs V2-->
 <html lang="lv">
     <head>
         <meta charset="UTF-8">
@@ -15,6 +16,13 @@
             <div class="card">
                 <div class="card-content">
                     <div class="input-group">
+                        <!--prioritates izveles un pievienosana-->
+                        <select id="prioritate" class="form-select w-auto">
+    <option value="secondary">Zema</option>
+    <option value="warning">Vidēja</option>
+    <option value="danger">Svarīgi</option>
+                </select>
+                
                 <input id="ievads" type="text" class="form-control" placeholder="Ievadiet darbu....">
                 <input type="button" class="btn btn-primary" onclick="Pievienosana()" value="Pievienot">
              
@@ -25,54 +33,56 @@
         </div>
         
         <script>
+        //prioritates un dzesanas
         function Pievienosana(){
-            const elements = document.createElement('li');
-            elements.innerHTML=document.getElementById("ievads").value;
-            document.body.appendChild(elements);
-            document.getElementById("task-list").appendChild(elements);
-            elements.classList.add("list-group-item");
-             elements.onclick = function(){
-                 elements.classList.toggle("text-decoration-line-through"); 
+    const teksts = document.getElementById("ievads").value;
+    if(teksts === "") return;
+    const krasa = document.getElementById("prioritate").value;
+    const li = document.createElement("li");
+    li.className = "list-group-item d-flex justify-content-between align-items-center";
+        const kreisais = document.createElement("div");
+    const badge = document.createElement("span");
+    badge.className = "badge bg-" + krasa + " me-2";
+    badge.innerText = document.getElementById("prioritate").options[document.getElementById("prioritate").selectedIndex].text;
+    const tekstsSpan = document.createElement("span");
+    tekstsSpan.innerText = teksts;
+        tekstsSpan.onclick = function(){
+    tekstsSpan.classList.toggle("text-decoration-line-through");
+    saveData();
+}
+        kreisais.appendChild(badge);
+        kreisais.appendChild(tekstsSpan);
+        //dzest datus
+    const dzest = document.createElement("button");
+  dzest.classList.add("btn","btn-danger","float-end");
+    dzest.innerText = "Dzēst";
+    dzest.onclick = function(){
+    li.remove();
+    //saglaba datus pec dzesanas
+    saveData();
+}
+// pievieno elementus sarakstam
+    li.appendChild(kreisais);
+    li.appendChild(dzest);
+    document.getElementById("task-list").appendChild(li);
     
-             }
-            const dzest=document.createElement('button');
-            dzest.innerText="Dzest";
-            document.body.appendChild(dzest);
-   
-            
-            dzest.classList.add("btn");
-            dzest.classList.add("btn-danger");
-            dzest.classList.add("float-end");
-            dzest.onclick = function(){
-              elements.remove(); 
-             saveData();
-               
-            }
-            elements.appendChild(dzest);
-            saveData();
-      
-        }
-         function saveTasks(){
-             var tasks = [] 
-             document.querySelectorAll("#tasklist li").forEach(task => {
-                 tasks.push(task.textContent);
-             });
-             SaveData(tasks);
-         }
-        function saveData() {
-            
-            console.log
-            const myJson = JSON.
-            
-        }
-
-        function loadData() {
-           const data = localStorage.getItem("ievads");
+// notiras ievades lauks
+    document.getElementById("ievads").value = "";
+    // Saglaba datus
+    saveData();
+}
+    // uztaisi localstorage par json
+        function saveData(){
+    localStorage.setItem("tasks", JSON.stringify(document.getElementById("task-list").innerHTML));
+}
+     // Ieladejas dati no localStorage
+        function loadData(){
+    const data = localStorage.getItem("tasks");
     if(data){
-        document.getElementById("task-list").innerHTML = data;
-    } 
-  
-        }
+    document.getElementById("task-list").innerHTML = JSON.parse(data);
+    }
+ }
+ // Ielaledajs visi dati kad atveras lapa
               loadData();
         </script>
     </body>
