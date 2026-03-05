@@ -1,6 +1,7 @@
 <!Doctype html>
 <!--Autors: Andrejs Šorecs V1-->
 <!--Autors: Mikus Tolkacevs V2-->
+<!--Autors: Rūdolfs Čābūts V3-->
 <html lang="lv">
     <head>
         <meta charset="UTF-8">
@@ -24,7 +25,14 @@
                 </select>
                 
                 <input id="ievads" type="text" class="form-control" placeholder="Ievadiet darbu....">
-                <input type="button" class="btn btn-primary" onclick="Pievienosana()" value="Pievienot">
+                
+			<div class="input-group mb-3">
+  		<span class="input-group-text">One</span>
+  		<span class="input-group-text">Two</span>
+  		<span class="input-group-text">Three</span>
+  		<input type="text" class="form-control">
+		</div>
+  
              
                 </div>
                     <ul id="task-list" class="list-group"></ul>
@@ -82,7 +90,7 @@
     document.getElementById("task-list").innerHTML = JSON.parse(data);
     }
  }
- // Ielaledajs visi dati kad atveras lapa
+ // Ielaledajs visi dati kad atveras lapas
               loadData();
         </script>
     </body>
