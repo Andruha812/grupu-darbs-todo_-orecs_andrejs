@@ -20,21 +20,23 @@
                         <!--prioritates izveles un pievienosana-->
                         <select id="prioritate" class="form-select w-auto">
     <option value="secondary">Zema</option>
-    <option value="warning">Vidēja</option>
+    <option value="warning">Vidēja<z/option>
     <option value="danger">Svarīgi</option>
                 </select>
                 
                 <input id="ievads" type="text" class="form-control" placeholder="Ievadiet darbu....">
                 
-			<div class="input-group mb-3">
-  		<span class="input-group-text">One</span>
-  		<span class="input-group-text">Two</span>
-  		<span class="input-group-text">Three</span>
-  		<input type="text" class="form-control">
-		</div>
-  
              
                 </div>
+                <div class="input-group mb-3">
+                <input id="ievads" type="text" class="form-control" placeholder="Meklēt uzdevumu....">
+                
+                <div class="btn-group">
+            <button type="button" class="btn btn-primary">Visi</button>
+            <button type="button" class="btn btn-primary">Aktīvie</button>
+            <button type="button" class="btn btn-primary">Pabeigtie</button>
+            </div>
+        </div>
                     <ul id="task-list" class="list-group"></ul>
                 </div>
             </div>
