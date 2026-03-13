@@ -1,6 +1,8 @@
 <!Doctype html>
 <!--Autors: Andrejs Šorecs V1-->
 <!--Autors: Mikus Tolkacevs V2-->
+<!--Autors: Rūdolfs Čābūts V3-->
+
 <html lang="lv">
 <head>
 <meta charset="UTF-8">
@@ -27,7 +29,7 @@
 <option value="danger">Svarīgi</option>
 </select>
 
-<input id="ievads" type="text" class="form-control" placeholder="Ievadiet darbu....">
+<input id="ievads" type="text" class="form-control w-75" placeholder="Ievadiet darbu....">
 
 <input type="button" class="btn btn-primary" onclick="Pievienosana()" value="Pievienot">
 </div>
@@ -58,6 +60,8 @@
 
 <script>
 
+let currentFilter="all";
+
 function Pievienosana(){
 
 const teksts=document.getElementById("ievads").value;
@@ -81,6 +85,7 @@ tekstsSpan.onclick=function(){
 tekstsSpan.classList.toggle("text-decoration-line-through");
 saveData();
 updateCounter();
+applyFilters();
 }
 
 kreisais.appendChild(badge);
@@ -106,6 +111,7 @@ save.onclick=function(){
 tekstsSpan.innerText=input.value;
 li.replaceChild(kreisais,editDiv);
 saveData();
+applyFilters();
 }
 
 const editDiv=document.createElement("div");
@@ -127,6 +133,7 @@ dzest.onclick=function(){
 li.remove();
 saveData();
 updateCounter();
+applyFilters();
 }
 
 
@@ -144,6 +151,7 @@ document.getElementById("ievads").value="";
 
 saveData();
 updateCounter();
+applyFilters();
 
 }
 
@@ -168,10 +176,10 @@ span.onclick=function(){
 span.classList.toggle("text-decoration-line-through");
 saveData();
 updateCounter();
+applyFilters();
 }
 
 });
-
 
 document.querySelectorAll("#task-list li .btn-outline-danger").forEach(function(btn){
 
@@ -179,6 +187,43 @@ btn.onclick=function(){
 btn.closest("li").remove();
 saveData();
 updateCounter();
+applyFilters();
+}
+
+});
+
+document.querySelectorAll("#task-list li .btn-outline-info").forEach(function(btn){
+
+btn.onclick=function(){
+
+const li=btn.closest("li");
+const kreisais=li.querySelector("div:first-child");
+const tekstsSpan=kreisais.querySelector("span:last-child");
+
+const input=document.createElement("input");
+input.type="text";
+input.value=tekstsSpan.innerText;
+input.className="form-control";
+
+const save=document.createElement("button");
+save.className="btn btn-success btn-sm ms-2";
+save.innerText="Saglabāt";
+
+save.onclick=function(){
+tekstsSpan.innerText=input.value;
+li.replaceChild(kreisais,editDiv);
+saveData();
+applyFilters();
+}
+
+const editDiv=document.createElement("div");
+editDiv.className="d-flex w-100";
+
+editDiv.appendChild(input);
+editDiv.appendChild(save);
+
+li.replaceChild(editDiv,kreisais);
+
 }
 
 });
@@ -186,55 +231,52 @@ updateCounter();
 }
 
 updateCounter();
+applyFilters();
 
 }
 
 
 
 function searchTasks(){
-
-const input=document.getElementById("searchInput").value.toLowerCase();
-
-document.querySelectorAll("#task-list li").forEach(function(task){
-
-if(task.innerText.toLowerCase().includes(input)){
-task.style.display="";
-}
-else{
-task.style.display="none";
-}
-
-});
-
+applyFilters();
 }
 
 
 
 function filterTasks(type){
-
-document.querySelectorAll("#task-list li").forEach(function(task){
-
-const text=task.querySelector("span:last-child");
-
-if(type==="all"){
-task.style.display="";
+currentFilter=type;
+applyFilters();
 }
 
-if(type==="active"){
-if(text.classList.contains("text-decoration-line-through")){
-task.style.display="none";
-}else{
-task.style.display="";
-}
+
+
+function applyFilters(){
+
+const search=document.getElementById("searchInput").value.toLowerCase();
+
+const tasks=document.querySelectorAll("#task-list li");
+
+tasks.forEach(function(task){
+
+const textElement=task.querySelector("div span:last-child");
+const text=textElement.innerText.toLowerCase();
+const completed=textElement.classList.contains("text-decoration-line-through");
+
+let visible=true;
+
+if(search!=="" && !text.includes(search)){
+visible=false;
 }
 
-if(type==="completed"){
-if(text.classList.contains("text-decoration-line-through")){
-task.style.display="";
-}else{
-task.style.display="none";
+if(currentFilter==="active" && completed){
+visible=false;
 }
+
+if(currentFilter==="completed" && !completed){
+visible=false;
 }
+
+task.style.display=visible ? "" : "none";
 
 });
 
@@ -256,6 +298,7 @@ task.remove();
 
 saveData();
 updateCounter();
+applyFilters();
 
 }
 
@@ -265,7 +308,7 @@ function updateCounter(){
 
 let count=0;
 
-document.querySelectorAll("#task-list li span:last-child").forEach(function(task){
+document.querySelectorAll("#task-list li div span:last-child").forEach(function(task){
 
 if(!task.classList.contains("text-decoration-line-through")){
 count++;
